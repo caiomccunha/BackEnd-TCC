@@ -24,6 +24,10 @@ public class demandaApoiadorModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+     @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false) 
+    private UsuarioModel usuario;
+
     @Column(nullable = false, length = 250)
     private String titulo;
 
@@ -37,17 +41,12 @@ public class demandaApoiadorModel {
     private String estado;
 
     @Column(nullable = false)
-    private LocalDateTime dataPostagem;
+    private LocalDateTime data_postagem;
 
     @Column(nullable = false)
     private LocalDate validade_oferta;
 
     @Enumerated(EnumType.STRING)
     private statusDemanda status;
-
-    @ManyToOne
-    @JoinColumn(name = "usuarioID", nullable = false) 
-    private UsuarioModel usuario;
-
 
 }
