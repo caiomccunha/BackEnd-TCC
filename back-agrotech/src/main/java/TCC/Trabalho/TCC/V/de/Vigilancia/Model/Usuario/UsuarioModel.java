@@ -26,25 +26,30 @@ public class UsuarioModel {
     @Column (nullable = false, length = 200, unique = true)
     private String email;
 
+    @Column
+    private String documento;
+
     @Column (nullable = false)
     private String cep;
 
     @Column (nullable = false)
     private String cidade;
 
+    @Column(nullable = false)
+    private String estado;
+
     @Column (nullable = false)
     private String telefone;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private tipoUsuario tipo;
+    private tipoUsuario tipo_usuario;
 
     @Enumerated(EnumType.STRING)
-    private tipoApoiador tipo_Apoiador;
+    private tipoApoiador tipo_apoiador;
 
     @Column (nullable = false)
     private String biografia;
 
-    @Column (nullable = false)
     private String foto_perfil;
 }

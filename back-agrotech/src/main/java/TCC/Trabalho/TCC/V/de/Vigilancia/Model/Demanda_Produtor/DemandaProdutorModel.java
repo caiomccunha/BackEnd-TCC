@@ -1,6 +1,8 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda_Produtor;
 
 import java.time.LocalDateTime;
+
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "demandaProdutor")
+@Table(name = "demanda_produtor")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,18 +24,21 @@ public class DemandaProdutorModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idProdutor", nullable = false)
-    private ProdutorModel produtor;
+    @JoinColumn(name = "id_usuario", nullable =  false)
+    private UsuarioModel idUsuario;
 
     @Column(nullable = false)
     private String titulo;
+
+    @Column(nullable = false)
+    private String descricao;
     
+     @Column(nullable = false)
+    private LocalDateTime data_postagem;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Categoria_Demanda categoria;
-
-    @Column(nullable = false)
-    private LocalDateTime dataPostagem;
 
     @Enumerated(EnumType.STRING)
     private statusDemanda status;

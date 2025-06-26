@@ -4,9 +4,8 @@ import jakarta.persistence.Entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Apoiador.ApoiadorModel;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda_Produtor.statusDemanda;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
@@ -46,6 +45,9 @@ public class demandaApoiadorModel {
     @Enumerated(EnumType.STRING)
     private statusDemanda status;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "usuarioID", nullable = false) 
+    private UsuarioModel usuario;
+
 
 }

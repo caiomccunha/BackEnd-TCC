@@ -19,14 +19,14 @@ import TCC.Trabalho.TCC.V.de.Vigilancia.Service.demandaApoiadorService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping ("tcc/demanda_apoiador")
+@RequestMapping ("tcc/demandaApoiador")
 
 public class demandaApoiadorController {
     @Autowired 
     private demandaApoiadorService service;
 
     @GetMapping
-    public List<demandaApoiadorModel> bsucar(){
+    public List<demandaApoiadorModel> buscar(){
         return service.buscar();
     }
 
