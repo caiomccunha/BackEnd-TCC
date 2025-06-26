@@ -14,48 +14,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TCC.Trabalho.TCC.V.de.Vigilancia.Model.demandaApoiadorModel;
-import TCC.Trabalho.TCC.V.de.Vigilancia.Service.demandaApoiadorService;
-
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.DemandasModel;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Service.DemandasService;
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping ("tcc/demandaApoiador")
-
-public class demandaApoiadorController {
+@RequestMapping("tcc/demandas")
+public class demandasController {
     @Autowired 
-    private demandaApoiadorService service;
+    private DemandasService service;
 
     @GetMapping
-    public List<demandaApoiadorModel> buscar(){
-        return service.buscar();
+    public List<DemandasModel> buscar (){
+        return service.buscarDemandasProd();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity <demandaApoiadorModel> buscarPorId(@PathVariable Long id){
-        return service.buscarPorID(id).map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity <DemandasModel> buscarPorID(@PathVariable Long id){
+        return service.buscarDemandaId(id).map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public demandaApoiadorModel adicionarDemanda(@RequestBody demandaApoiadorModel demanda){
-        return service.adicionar(demanda);
+    public DemandasModel adicionarDemanda(@RequestBody DemandasModel demanda){
+        return service.cadastrarDemandar(demanda);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity <demandaApoiadorModel> editarDemanda(@RequestBody demandaApoiadorModel demanda, @PathVariable Long id){
-        if (!service.buscarPorID(id).isPresent()) {
+    @PutMapping ("/{id}")
+    public ResponseEntity <DemandasModel> editarDemanda(@PathVariable Long id, @RequestBody DemandasModel demanda){
+        if (!service.buscarDemandaId(id).isPresent()){
             return ResponseEntity.notFound().build();
         }
 
         demanda.setId(id);
-        return ResponseEntity.ok(service.adicionar(demanda));
+        return ResponseEntity.ok(service.cadastrarDemandar(demanda));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping ("/{id}")
     public ResponseEntity <Void> excluirDemanda(@PathVariable Long id){
-        if (!service.buscarPorID(id).isPresent()) {
+         if (!service.buscarDemandaId(id).isPresent()){
             return ResponseEntity.notFound().build();
         }
-        service.excluir(id);
+        service.excluirDemanda(id);
         return ResponseEntity.noContent().build();
     }
+
+    
 }

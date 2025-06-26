@@ -6,23 +6,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda_Produtor.DemandaProdutorModel;
-import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.DemandaProdutorRepository;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.DemandasModel;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.DemandasRepository;
 
 @Service
-public class DemandaProdutorService {
+public class DemandasService {
     @Autowired
-    private DemandaProdutorRepository repository;
+    private DemandasRepository repository;
 
-    public List<DemandaProdutorModel> buscarDemandasProd(){
+    public List<DemandasModel> buscarDemandasProd(){
         return repository.findAll();
     }
 
-    public Optional <DemandaProdutorModel> buscarDemandaId(Long id){
+    public Optional <DemandasModel> buscarDemandaId(Long id){
         return repository.findById(id);
     }
 
-    public DemandaProdutorModel cadastrarDemandar(DemandaProdutorModel demandaProdutor){
+    public DemandasModel cadastrarDemandar(DemandasModel demandaProdutor){
         return repository.save(demandaProdutor);
     }
 

@@ -1,4 +1,4 @@
-package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda_Produtor;
+package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda;
 
 public enum Categoria_Demanda {
 

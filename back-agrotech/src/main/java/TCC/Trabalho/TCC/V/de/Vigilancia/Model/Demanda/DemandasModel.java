@@ -1,5 +1,6 @@
-package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda_Produtor;
+package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-public class DemandaProdutorModel {
+public class DemandasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,6 +49,9 @@ public class DemandaProdutorModel {
 
     @Column (nullable = false)
     private String estado;
+
+    @Column 
+    private Date validade_oferta;
 
 
 
