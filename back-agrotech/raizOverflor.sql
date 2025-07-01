@@ -20,7 +20,7 @@ foto_perfil text
 );
 
 
-create table demanda_produtor(
+create table demandas(
 id bigint auto_increment primary key unique not null,
 idUsuario bigint,
 titulo varchar (250) not null,
@@ -30,21 +30,10 @@ data_postagem datetime,
 status enum ('aberta', 'fechada'),
 cidade VARCHAR (60) NOT NULL,
 estado VARCHAR (60) not NULL,
+validade_oferta date,
 foreign key (idUsuario) references Usuario (id)
 );
 
-create table demanda_apoiador(
-id bigint primary key auto_increment not null unique,
-idUsuario bigint,
-titulo varchar (250) not null,
-descricao text not null,
-cidade VARCHAR (60) NOT NULL, 
-estado VARCHAR (60) NOT NULL,
-dataPostagem datetime default current_timestamp,
-validade_oferta date,
-status enum ('aberta', 'fechada'),
-foreign key (idUsuario) references Usuario (id)
-);
 
 
 
