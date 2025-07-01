@@ -1,0 +1,20 @@
+-- Tabela de Postagens
+CREATE TABLE post (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    message TEXT,
+    image_url VARCHAR(255),
+    likes INT DEFAULT 0,
+    PRIMARY KEY (id)
+);
+
+-- Tabela de Comentários
+CREATE TABLE comment (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    content TEXT,
+    post_id BIGINT,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_comment_post
+        FOREIGN KEY (post_id)
+        REFERENCES post(id)
+        ON DELETE CASCADE
+);
