@@ -1,6 +1,7 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario;
 
 public enum tipoApoiador {
+    NENHUM ("Nenhum"),
     PESSOA_FISICA ("Pessoa física"),
     ONG("ONG"),
     EMPRESA_COMERCIO("Empresa_Comércio"),

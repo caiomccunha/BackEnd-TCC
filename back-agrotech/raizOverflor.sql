@@ -1,4 +1,3 @@
--- Active: 1750714113071@@127.0.0.1@3306@raiz_overfror
 create database raiz_overfror;
 
 use raiz_overfror;
