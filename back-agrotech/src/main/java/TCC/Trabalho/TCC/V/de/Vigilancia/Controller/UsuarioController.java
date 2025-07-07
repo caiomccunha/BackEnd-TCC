@@ -16,30 +16,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 @RestController
 @RequestMapping ("tcc/usuarios")
 @CrossOrigin (origins = "*")
+@Tag(name = "Usuario", description = "Documentação do Crud de usuários do sistema")
 
 public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
+    @Operation(summary = "Lista de Usuarios", description = "Retorno da Lista de Usuarios")
     @GetMapping
     public List <UsuarioModel> buscarUsuario(){
         return service.buscarUsers();
     }
-
+    @Operation(summary = "Busca de usuários por ID", description = "Retorno dos usuários do sistema, apenas pelo ID")
     @GetMapping("/{id}")
     public ResponseEntity <UsuarioModel> buscarUsuarioPorId(@PathVariable Long id){
         return service.buscarUserPorID(id).map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation (summary = "Adicionar usuários", description = "Retorno da função de adicionar os usuários do sistema")
     @PostMapping
     public UsuarioModel adicionarUsuario (@RequestBody UsuarioModel usuario){
         return service.adicionarUser(usuario);
     }
 
+    @Operation(summary = "Edição de usuários" , description = "EndPoint da função de editar os usuários do sistema")
     @PutMapping ("/{id}")
     public ResponseEntity <UsuarioModel> editarInformaçõesDeUsuario (@PathVariable Long id, @RequestBody UsuarioModel usuario){
         if (!service.buscarUserPorID(id).isPresent()) {
