@@ -1,8 +1,7 @@
-package test.java.TCC.Trabalho.TCC.V.de.Vigilancia;
+package TCC.Trabalho.TCC.V.de.Vigilancia;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;    
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

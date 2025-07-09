@@ -48,8 +48,11 @@ public class UsuarioModel {
     @Enumerated(EnumType.STRING)
     private tipoApoiador tipo_apoiador;
 
-    @Column (nullable = false)
+   
     private String biografia;
 
     private String foto_perfil;
+
+    @Column(nullable = false)
+    private String senha;
 }

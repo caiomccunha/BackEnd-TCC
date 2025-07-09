@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TrabalhoTccVDeVigilanciaApplication",
+            "request": "launch",
+            "mainClass": "TCC.Trabalho.TCC.V.de.Vigilancia.TrabalhoTccVDeVigilanciaApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-TrabalhoTccVDeVigilanciaApplication<Trabalho-TCC-V-de-Vigilancia>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
