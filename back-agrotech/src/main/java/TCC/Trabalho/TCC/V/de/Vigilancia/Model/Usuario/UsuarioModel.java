@@ -48,7 +48,7 @@ public class UsuarioModel {
     @Enumerated(EnumType.STRING)
     private tipoApoiador tipo_apoiador;
 
-   
+    
     private String biografia;
 
     private String foto_perfil;

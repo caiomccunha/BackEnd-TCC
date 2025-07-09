@@ -22,6 +22,17 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
+    public Optional<UsuarioModel> autenticar(String email, String senha) {
+    Optional<UsuarioModel> usuario = repository.findByEmail(email);
+
+    if (usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
+        return usuario;
+    }
+
+    return Optional.empty();
+}
+
+
     public UsuarioModel adicionarUser(UsuarioModel usuario){
         return repository.save(usuario);
     }

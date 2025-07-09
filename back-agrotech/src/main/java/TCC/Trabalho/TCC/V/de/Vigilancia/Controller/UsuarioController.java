@@ -1,6 +1,7 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,19 @@ public class UsuarioController {
     public UsuarioModel adicionarUsuario (@RequestBody UsuarioModel usuario){
         return service.adicionarUser(usuario);
     }
+
+@PostMapping("/login")
+@Operation(summary = "Login de usuário", description = "Autentica um usuário pelo email e senha")
+public ResponseEntity<?> login(@RequestBody UsuarioModel login) {
+    Optional<UsuarioModel> usuario = service.autenticar(login.getEmail(), login.getSenha());
+
+    if (usuario.isPresent()) {
+        return ResponseEntity.ok(usuario.get());
+    } else {
+        return ResponseEntity.status(401).body("Email ou senha inválidos");
+    }
+}
+
 
     @Operation(summary = "Edição de usuários" , description = "EndPoint da função de editar os usuários do sistema")
     @PutMapping ("/{id}")

@@ -1,5 +1,4 @@
--- Active: 1750714113071@@127.0.0.1@3306@raiz_overfror
-create database raiz_overfror;
+CREATE database raiz_overfror;
 
 use raiz_overfror;
 
@@ -16,8 +15,17 @@ tipo_usuario enum ('APOIADOR', 'PRODUTOR') not null,
 tipo_apoiador enum ('PESSOA_FISICA', 'ONG', 'EMPRESA/COMERCIO, CONVENIADO'),
 biografia text,
 foto_perfil text
-
 );
+
+alter table Usuario 
+add column senha varchar (50);
+
+SET SQL_SAFE_UPDATES = 1;
+
+UPDATE Usuario SET senha = 'temporaria' WHERE senha IS NULL;
+
+alter table Usuario
+modify column senha varchar (50) not null;
 
 
 create table demandas(
@@ -35,5 +43,4 @@ foreign key (idUsuario) references Usuario (id)
 );
 
 
-
-
+select * from usuario;
