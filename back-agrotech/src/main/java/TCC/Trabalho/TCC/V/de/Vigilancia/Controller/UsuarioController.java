@@ -41,6 +41,12 @@ public class UsuarioController {
         return service.buscarUserPorID(id).map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Busca de usuários por Email", description = "Retorno dos usuários do sistema, apenas pelo Email")
+    @GetMapping("/email/{email}")
+    public ResponseEntity <UsuarioModel> buscarUsuarioPorEmail(@PathVariable String email){
+        return service.buscarUserPorEmail(email).map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @Operation (summary = "Adicionar usuários", description = "Retorno da função de adicionar os usuários do sistema")
     @PostMapping
     public UsuarioModel adicionarUsuario (@RequestBody UsuarioModel usuario){

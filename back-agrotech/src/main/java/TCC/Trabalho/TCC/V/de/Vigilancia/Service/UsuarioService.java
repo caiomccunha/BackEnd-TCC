@@ -22,6 +22,10 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
+    public Optional <UsuarioModel> buscarUserPorEmail(String email){
+        return repository.findByEmail(email);
+    }
+
     public Optional<UsuarioModel> autenticar(String email, String senha) {
     Optional<UsuarioModel> usuario = repository.findByEmail(email);
 
