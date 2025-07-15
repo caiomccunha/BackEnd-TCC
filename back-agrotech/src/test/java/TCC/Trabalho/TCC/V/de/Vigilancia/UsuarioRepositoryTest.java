@@ -45,6 +45,7 @@ public class UsuarioRepositoryTest {
         usuario.setTelefone("31999999999");
         usuario.setTipo_usuario(tipoUsuario.PRODUTOR);
         usuario.setBiografia("Produtor de café orgânico");
+        usuario.setSenha("12345");
         
         System.out.println("Cadastrando nome de usuários: " + usuario.getNome());
         System.out.println("Cadastrando email de usuários: " + usuario.getEmail());
@@ -55,12 +56,13 @@ public class UsuarioRepositoryTest {
         System.out.println("Cadastrando telefone de usuários: " + usuario.getTelefone());
         System.out.println("Cadastrando tipo de usuário: " + usuario.getTipo_usuario());
         System.out.println("Cadastrando biografia de usuários: " + usuario.getBiografia());
+        System.out.println("Cadastrando senha: " + usuario.getSenha());
         
         var response = usuarioService.adicionarUser(usuario);
         System.out.println("Validando cadastro de usuário");
         assertEquals(response.getNome(), "Caio Messi",
             "O nome do usuário foi cadastrado corretamente: 'Caio Messi'");
-        assertEquals(response.getEmail(), "caiomessi@gmail.com",
+        assertEquals(response.getEmail(), "caiomessi@gmail",
             "O email do usuário foi cadastrado corretamente: 'caiomessi@gmail.com'");
         assertEquals(response.getDocumento(), "12345678698",
             "O documento do usuário foi cadastrado corretamente: '12345678698'");
@@ -76,6 +78,8 @@ public class UsuarioRepositoryTest {
             "O tipo de usuário foi cadastrado corretamente: 'PRODUTOR'");
         assertEquals(response.getBiografia(), "Produtor de café orgânico",  
             "A biografia do usuário foi cadastrada corretamente: 'Produtor de café orgânico'");
+        assertEquals(response.getSenha(), "12345",
+            "A senha do usuário está sendo cadastrada corretamente: '12345'");
         
         
             System.out.println("Teste de cadastro de usuário concluído com sucesso!");  
