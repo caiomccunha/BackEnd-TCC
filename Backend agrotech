@@ -1,0 +1,44 @@
+# AgroTech
+
+**Conectamos agricultores com compradores para valorizar cada safra**
+
+O **AgroTech** é um sistema web que busca ajudar tanto **_agricultores_** quanto **_apoiadores_** (ONGs, restaurantes, hortifrutis, entre outros);
+
+---
+
+## 🚀 Funcionalidades do sistema:
+
+-📦 Cadastro de demandas (Safras excedentes);
+-🧑‍🌾 Registro de agricultores e compradores;
+-🔍 Pesquisa das demandas por categorias **(Grãos, feijões e raízes, frutas e hortaliças, etc)**;
+-💬 Sistema de contato entre agricultor e apoiador;
+-📱🖥️ Interface responsiva e amigável (Para web e mobile);
+
+---
+
+## 💻 Tecnologias Utilizadas
+
+- **HTML5** e **CSS** (Criação, montagem, organização  e estilização do frontend);
+- **Bootstrap** (Biblioteca para a criação do layout);
+- **JavaScript** (Conexão do frontend com o backend, e com o consumo da API);
+- **Java + SpringBoot** (Backend do sistema);
+- **Figma** (Protótipo do sistema).
+
+---
+
+## 🎯 Objetivo:
+
+Promover a valorização da agricultura familiar, permitindo que os produtores tenham acesso direto ao mercado, criando conexões profissionais com os compradores, e aumentando sua margem de lucro. 
+
+---
+
+## 📷 Protótipos:
+- **Diagrama de Entidade e Relacionamento**: 
+    O diagrama de Entidade e Relacionamento foi feito no miro ![Diagrama de Entidade Relacionamento](file:///C:/Users/caiom/Downloads/TCC.jpg);
+
+- **Diagrama de Caso de Uso**:
+    O diagrama de Caso de Uso foi feito no miro ![Diagrama de Caso de Uso](file:///C:/Users/caiom/OneDrive/Imagens/Screenshots/Captura%20de%20tela%202025-07-16%20213004.png);
+
+- **Protótipo frontend**: O layout foi inicialmente desenvolvido no [Figma - Landing Page](https://www.figma.com/design/8zuANCGq96bwXBXvpQTuVH/Prot%C3%B3tipo-Landing-Page?node-id=1-3&t=XPwh6OwDslQB3vcQ-0), [Figma - Telas Principais](https://www.figma.com/design/LHDPZmpVP8efHY8BwGBHmo/Prot%C3%B3tipo-das-telas-AgroTech?node-id=0-1&p=f&t=RU8byHNhMOldJbcw-0);
+- 
+  
