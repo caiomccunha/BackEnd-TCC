@@ -2,7 +2,7 @@ CREATE database raiz_overfror;
 
 use raiz_overfror;
 
-create table Usuario(
+create table usuario(
 id bigint primary key auto_increment not null,
 nome varchar (200) not null,
 email VARCHAR(200) not null UNIQUE,
@@ -14,19 +14,9 @@ telefone VARCHAR (300) not null,
 tipo_usuario enum ('APOIADOR', 'PRODUTOR') not null,
 tipo_apoiador enum ('PESSOA_FISICA', 'ONG', 'EMPRESA/COMERCIO, CONVENIADO'),
 biografia text,
-foto_perfil text
+foto_perfil longblob,
+senha varchar (50) not null
 );
-
-alter table Usuario 
-add column senha varchar (50);
-
-SET SQL_SAFE_UPDATES = 1;
-
-UPDATE Usuario SET senha = 'temporaria' WHERE senha IS NULL;
-
-alter table Usuario
-modify column senha varchar (50) not null;
-
 
 create table demandas(
 id bigint auto_increment primary key unique not null,
@@ -41,6 +31,3 @@ estado VARCHAR (60) not NULL,
 validade_oferta date,
 foreign key (idUsuario) references Usuario (id)
 );
-
-
-select * from usuario;

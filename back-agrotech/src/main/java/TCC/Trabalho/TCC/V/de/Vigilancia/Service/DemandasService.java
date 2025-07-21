@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.DemandasModel;
-import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.DemandasRepository;
 
 @Service

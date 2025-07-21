@@ -26,7 +26,7 @@ public class UsuarioModel {
     @Column (nullable = false, length = 200, unique = true)
     private String email;
 
-    @Column
+    @Column (nullable = false, length = 20, unique = true)
     private String documento;
 
     @Column (nullable = false)
@@ -51,7 +51,9 @@ public class UsuarioModel {
     
     private String biografia;
 
-    private String foto_perfil;
+    @Lob
+    @Column (name = "foto_perfil", columnDefinition = "LONGBLOB")
+    private byte[] foto_perfil;
 
     @Column(nullable = false)
     private String senha;
