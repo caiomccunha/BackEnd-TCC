@@ -1,0 +1,35 @@
+package TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Demandas;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.Categoria_Demanda;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.statusDemanda;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class DemandaDTO {
+    private Long id;
+    private Long idUsuario;
+    private String titulo;
+    private String descricao;
+
+    @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime data_postagem;
+
+    private Categoria_Demanda categoria;
+    private statusDemanda status;
+    private String cidade;
+    private String estado;
+
+    @JsonFormat (pattern = "yyyy-MM-dd")
+    private Date validade_oferta;
+
+    private String usuarioNome;
+    private String usuarioFoto;
+    private String usuarioTipo;
+}
