@@ -20,7 +20,7 @@ senha varchar (50) not null
 
 create table demandas(
 id bigint auto_increment primary key unique not null,
-idUsuario bigint,
+id_usuario bigint not NULL,
 titulo varchar (250) not null,
 descricao text not null,
 categoria enum ('graos', 'feijoes_raizes', 'frutas_hortalicas', 'verduras_ervas', 'outros'),
@@ -29,5 +29,5 @@ status enum ('aberta', 'fechada'),
 cidade VARCHAR (60) NOT NULL,
 estado VARCHAR (60) not NULL,
 validade_oferta date,
-foreign key (idUsuario) references Usuario (id)
+foreign key (id_usuario) references usuario (id)
 );

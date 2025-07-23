@@ -26,7 +26,7 @@ public class DemandasModel {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable =  false)
-    private UsuarioModel idUsuario;
+    private UsuarioModel usuario;
 
     @Column(nullable = false)
     private String titulo;

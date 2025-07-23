@@ -2,8 +2,8 @@
 
     public enum statusDemanda {
 
-        ABERTA ("Aberta"),
-        FECHADA ("Fechada");
+        aberta ("Aberta"),
+        fechada ("Fechada");
 
         private String status;
 
