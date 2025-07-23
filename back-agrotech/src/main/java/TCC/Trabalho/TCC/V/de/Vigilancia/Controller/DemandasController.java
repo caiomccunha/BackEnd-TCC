@@ -9,6 +9,8 @@ import TCC.Trabalho.TCC.V.de.Vigilancia.Service.DemandasService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,29 +43,20 @@ public class DemandasController {
     }
 
     @PostMapping
-    public ResponseEntity<DemandasModel> criarDemanda(@RequestBody DemandaDTO demandaDTO) {
-        // Validação do usuário
-        if (demandaDTO.getUsuario() == null) {
+    public ResponseEntity<DemandaDTO> criarDemanda(@RequestBody CriacaoDemandaDTO demandaDTO) {
+        if (demandaDTO.getUsuarioId() == null) {
             throw new IllegalArgumentException("ID do usuário é obrigatório");
         }
 
-        UsuarioModel usuario = usuarioRepository.findById(demandaDTO.getUsuario())
+        UsuarioModel usuario = usuarioRepository.findById(demandaDTO.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        // Conversão para Model
-        DemandasModel demanda = new DemandasModel();
-        demanda.setTitulo(demandaDTO.getTitulo());
-        demanda.setDescricao(demandaDTO.getDescricao());
-        demanda.setData_postagem(demandaDTO.getData_postagem());
-        demanda.setCategoria(demandaDTO.getCategoria());
-        demanda.setStatus(demandaDTO.getStatus());
-        demanda.setCidade(demandaDTO.getCidade());
-        demanda.setEstado(demandaDTO.getEstado());
-        demanda.setValidade_oferta(demandaDTO.getValidade_oferta());
+        DemandasModel demanda = converterParaModel(demandaDTO);
         demanda.setUsuario(usuario);
+        demanda.setData_postagem(LocalDateTime.now());
 
         DemandasModel demandaSalva = demandasService.cadastrarDemandar(demanda);
-        return ResponseEntity.ok(demandaSalva);
+        return ResponseEntity.ok(converterParaDTO(demandaSalva));
     }
 
     @PutMapping("/{id}")
@@ -75,9 +68,15 @@ public class DemandasController {
             return ResponseEntity.notFound().build();
         }
 
+        UsuarioModel usuario = usuarioRepository.findById(demandaDTO.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         DemandasModel demanda = converterParaModel(demandaDTO);
         demanda.setId(id);
-        return ResponseEntity.ok(converterParaDTO(demandasService.cadastrarDemandar(demanda)));
+        demanda.setUsuario(usuario);
+
+        DemandasModel demandaAtualizada = demandasService.cadastrarDemandar(demanda);
+        return ResponseEntity.ok(converterParaDTO(demandaAtualizada));
     }
 
     @DeleteMapping("/{id}")
@@ -89,7 +88,7 @@ public class DemandasController {
         return ResponseEntity.noContent().build();
     }
 
-    // Métodos auxiliares de conversão
+    // Conversões
     private DemandaDTO converterParaDTO(DemandasModel model) {
         DemandaDTO dto = new DemandaDTO();
         dto.setId(model.getId());
@@ -102,12 +101,16 @@ public class DemandasController {
         dto.setCidade(model.getCidade());
         dto.setEstado(model.getEstado());
         dto.setValidade_oferta(model.getValidade_oferta());
-        
+
         if (model.getUsuario() != null) {
             dto.setUsuarioNome(model.getUsuario().getNome());
             dto.setUsuarioTipo(model.getUsuario().getTipo_usuario().toString());
+
+            if (model.getUsuario().getFoto_perfil() != null) {
+                dto.setUsuarioFoto(Base64.getEncoder()
+                        .encodeToString(model.getUsuario().getFoto_perfil()));
+            }
         }
-        
         return dto;
     }
 
@@ -119,6 +122,7 @@ public class DemandasController {
         model.setCidade(dto.getCidade());
         model.setEstado(dto.getEstado());
         model.setValidade_oferta(dto.getValidade_oferta());
+        model.setStatus(dto.getStatus());
         return model;
     }
 }
