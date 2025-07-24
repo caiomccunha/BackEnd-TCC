@@ -1,6 +1,8 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Demandas;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.Categoria_Demanda;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.statusDemanda;
@@ -17,6 +19,7 @@ public class CriacaoDemandaDTO {
     private String titulo;
     private String descricao;
     private Categoria_Demanda categoria;
+    private LocalDate data_postagem;
     private String cidade;
     private String estado;
     private Date validade_oferta;
