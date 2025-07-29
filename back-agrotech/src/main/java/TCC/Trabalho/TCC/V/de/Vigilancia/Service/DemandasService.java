@@ -22,6 +22,10 @@ public class DemandasService {
         return repository.findById(id);
     }
 
+    public List<DemandasModel> buscarDemandasPorUsuario(Long usuarioId) {
+        return repository.findByUsuarioId(usuarioId);
+    }
+
     public DemandasModel cadastrarDemandar(DemandasModel demandaProdutor){
         return repository.save(demandaProdutor);
     }

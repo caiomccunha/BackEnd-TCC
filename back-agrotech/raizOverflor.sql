@@ -30,4 +30,5 @@ cidade VARCHAR (60) NOT NULL,
 estado VARCHAR (60) not NULL,
 validade_oferta date,
 foreign key (id_usuario) references usuario (id)
+ON DELETE CASCADE
 );

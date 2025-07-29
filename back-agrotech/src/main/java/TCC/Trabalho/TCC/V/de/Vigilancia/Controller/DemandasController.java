@@ -42,6 +42,14 @@ public class DemandasController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+ @GetMapping("/usuario/{id}")
+    public List<DemandaDTO> buscarDemandasPorUsuario(@PathVariable Long id) {
+    return demandasService.buscarDemandasPorUsuario(id).stream()
+            .map(this::converterParaDTO)
+            .collect(Collectors.toList());
+}
+
+
     @PostMapping
     public ResponseEntity<DemandaDTO> criarDemanda(@RequestBody CriacaoDemandaDTO demandaDTO) {
         if (demandaDTO.getUsuarioId() == null) {
