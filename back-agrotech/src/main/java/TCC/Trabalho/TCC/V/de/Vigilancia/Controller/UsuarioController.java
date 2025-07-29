@@ -51,6 +51,18 @@ public class UsuarioController {
         return service.buscarUserPorEmail(email).map(u -> ResponseEntity.ok(service.toDTO(u))).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/{id}/foto")
+        public ResponseEntity<byte[]> getFotoPerfil(@PathVariable Long id) {
+    Optional<UsuarioModel> usuarioOptional = service.buscarUserPorID(id);
+    if (!usuarioOptional.isPresent() || usuarioOptional.get().getFoto_perfil() == null) {
+        return ResponseEntity.notFound().build();
+    }
+    byte[] foto = usuarioOptional.get().getFoto_perfil();
+    return ResponseEntity.ok()
+        .header("Content-Type", "image/jpeg") // ou image/png conforme o tipo
+        .body(foto);
+}
+
     @Operation (summary = "Adicionar usuários", description = "Retorno da função de adicionar os usuários do sistema")
     @PostMapping
     public ResponseEntity <UsuarioDTO> adicionarUsuario(@RequestBody UsuarioCadastroDTO dto){
@@ -102,6 +114,27 @@ public class UsuarioController {
         return service.atualizarUsuario(id, dto)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}/foto")
+    @Operation(summary = "Atualizar foto de perfil", description = "Atualiza a foto de perfil do usuário")
+    public ResponseEntity<?> atualizarFotoPerfil(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            Optional<UsuarioModel> usuarioOptional = service.buscarUserPorID(id);
+
+            if (!usuarioOptional.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            UsuarioModel usuario = usuarioOptional.get();
+            usuario.setFoto_perfil(file.getBytes());
+
+            service.adicionarUser(usuario); // reusa o save
+
+            return ResponseEntity.ok("Foto de perfil atualizada com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao atualizar a foto: " + e.getMessage());
+        }
     }
 
     @Operation(summary = "Deletar Usuários", description = "EndPoint da função delete no sistema de usuários")
