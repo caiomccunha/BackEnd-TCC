@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.Categoria_Demanda;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.TipoApoio;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.statusDemanda;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +33,8 @@ public class DemandaDTO {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date validade_oferta;
+
+    private TipoApoio tipoApoio; 
 
     // Apenas o ID do usuário
     @NotNull(message = "O ID do usuário é obrigatório")

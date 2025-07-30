@@ -53,6 +53,10 @@ public class DemandasModel {
     @Column 
     private Date validade_oferta;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private TipoApoio tipo_apoio;
+
 
 
 
