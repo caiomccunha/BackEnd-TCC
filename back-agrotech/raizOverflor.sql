@@ -56,4 +56,15 @@ CREATE TABLE comment (
         REFERENCES post(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE mensagem (
+    id BIGINT NOT NULL AUTO_INCREMENT;
+    conteudo TEXT NOT NULL,
+    id_remetente BIGINT NOT NULL,
+    id_destinatario BIGINT NOT NULL,
+    data_envio DATETIME NOT NULL,
+    FOREIGN KEY (id_remetente) REFERENCES usuario (id),
+    FOREIGN KEY (id_destinario) REFERENCES usuario (id),
+    PRIMARY KEY (id)
+);
 select * from usuario;

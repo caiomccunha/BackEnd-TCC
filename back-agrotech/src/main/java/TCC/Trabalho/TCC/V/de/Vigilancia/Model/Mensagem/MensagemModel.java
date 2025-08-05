@@ -1,11 +1,8 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Mensagem;
 
-import jakarta.persistence.Column;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +19,15 @@ public class MensagemModel {
 
     @Column (nullable = false, length = 2048)
     private String conteudo;
+
+    @Column (nullable = false)
+    private Long idRementente;
+
+    @Column (nullable = false)
+    private Long idDestinarario;
+
+    @Column (nullable = false)
+    private LocalDateTime data_envio;
 
     
 }
