@@ -19,7 +19,7 @@ public class CriacaoDemandaDTO {
     private String titulo;
     private String descricao;
     private Categoria_Demanda categoria;
-    private LocalDate data_postagem;
+    private Date data_postagem;
     private String cidade;
     private String estado;
     private Date validade_oferta;

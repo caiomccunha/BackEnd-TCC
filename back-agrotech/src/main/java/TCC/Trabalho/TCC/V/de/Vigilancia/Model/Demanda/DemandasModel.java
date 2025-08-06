@@ -1,6 +1,7 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
@@ -35,7 +36,7 @@ public class DemandasModel {
     private String descricao;
     
      @Column(nullable = false)
-    private LocalDateTime data_postagem;
+    private Date data_postagem;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

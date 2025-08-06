@@ -1,7 +1,7 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Demandas;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -24,7 +24,7 @@ public class DemandaDTO {
 
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime data_postagem;
+    private LocalDate data_postagem;
 
     private Categoria_Demanda categoria;
     private statusDemanda status;
