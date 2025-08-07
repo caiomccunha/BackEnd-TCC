@@ -68,16 +68,17 @@ public class UsuarioService {
         if (usuarioExistente.isPresent()) {
             UsuarioModel usuario = usuarioExistente.get();
 
-            usuario.setNome(dto.getNome());
-            usuario.setEmail(dto.getEmail());
-            usuario.setDocumento(dto.getDocumento());
-            usuario.setCep(dto.getCep());
-            usuario.setCidade(dto.getCidade());
-            usuario.setEstado(dto.getEstado());
-            usuario.setTelefone(dto.getTelefone());
-            usuario.setTipo_usuario(dto.getTipo_usuario());
-            usuario.setTipo_apoiador(dto.getTipo_apoiador());
-            usuario.setBiografia(dto.getBiografia());
+            // Atualiza apenas se o campo não for nulo ou vazio
+            if (dto.getNome() != null && !dto.getNome().isEmpty()) usuario.setNome(dto.getNome());
+            if (dto.getEmail() != null && !dto.getEmail().isEmpty()) usuario.setEmail(dto.getEmail());
+            if (dto.getDocumento() != null && !dto.getDocumento().isEmpty()) usuario.setDocumento(dto.getDocumento());
+            if (dto.getCep() != null && !dto.getCep().isEmpty()) usuario.setCep(dto.getCep());
+            if (dto.getCidade() != null && !dto.getCidade().isEmpty()) usuario.setCidade(dto.getCidade());
+            if (dto.getEstado() != null && !dto.getEstado().isEmpty()) usuario.setEstado(dto.getEstado());
+            if (dto.getTelefone() != null && !dto.getTelefone().isEmpty()) usuario.setTelefone(dto.getTelefone());
+            if (dto.getTipo_usuario() != null) usuario.setTipo_usuario(dto.getTipo_usuario());
+            if (dto.getTipo_apoiador() != null) usuario.setTipo_apoiador(dto.getTipo_apoiador());
+            if (dto.getBiografia() != null && !dto.getBiografia().isEmpty()) usuario.setBiografia(dto.getBiografia());
 
             if (dto.getFoto_perfil() == null) {
                 try (InputStream input = getClass().getResourceAsStream("/static/icon perfil criado recentemente.png")) {
