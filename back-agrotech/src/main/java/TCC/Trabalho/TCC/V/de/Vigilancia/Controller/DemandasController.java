@@ -8,9 +8,9 @@ import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.UsuarioRepository;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Service.DemandasService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,7 +62,7 @@ public class DemandasController {
 
         DemandasModel demanda = converterParaModel(demandaDTO);
         demanda.setUsuario(usuario);
-        demanda.setData_postagem(Date.valueOf(LocalDate.now()));
+        demanda.setData_postagem(LocalDate.now());
 
         DemandasModel demandaSalva = demandasService.cadastrarDemandar(demanda);
         return ResponseEntity.ok(converterParaDTO(demandaSalva));

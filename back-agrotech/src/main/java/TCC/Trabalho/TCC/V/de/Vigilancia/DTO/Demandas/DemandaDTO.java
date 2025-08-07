@@ -23,7 +23,7 @@ public class DemandaDTO {
     private String descricao;
 
     @CreationTimestamp
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+   @JsonFormat(pattern = "yyyy-MM-dd") // Apenas a data
     private LocalDate data_postagem;
 
     private Categoria_Demanda categoria;
@@ -32,7 +32,7 @@ public class DemandaDTO {
     private String estado;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date validade_oferta;
+    private LocalDate validade_oferta;
 
     private TipoApoio tipoApoio; 
 

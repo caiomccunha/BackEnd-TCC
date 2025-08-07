@@ -1,8 +1,6 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import jakarta.persistence.*;
@@ -36,7 +34,7 @@ public class DemandasModel {
     private String descricao;
     
      @Column(nullable = false)
-    private Date data_postagem;
+    private LocalDate data_postagem;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -52,7 +50,7 @@ public class DemandasModel {
     private String estado;
 
     @Column 
-    private Date validade_oferta;
+    private LocalDate validade_oferta;
 
     @Enumerated(EnumType.STRING)
     @Column

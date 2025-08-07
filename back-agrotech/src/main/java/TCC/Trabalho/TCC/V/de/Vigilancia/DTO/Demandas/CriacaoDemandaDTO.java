@@ -1,6 +1,5 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Demandas;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.Categoria_Demanda;
@@ -19,10 +18,10 @@ public class CriacaoDemandaDTO {
     private String titulo;
     private String descricao;
     private Categoria_Demanda categoria;
-    private Date data_postagem;
+    private LocalDate data_postagem;
     private String cidade;
     private String estado;
-    private Date validade_oferta;
+    private LocalDate validade_oferta;
     private TipoApoio tipo_apoio; // Representa o tipo de apoio como String
 
     // Novos campos
