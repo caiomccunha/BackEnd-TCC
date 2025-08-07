@@ -22,7 +22,7 @@ public class MensagemDTO {
     private LocalDateTime data_envio;
 
     @NotNull
-    private Long rementente;
+    private Long remetente;
 
     @NotNull
     private Long destinatario;

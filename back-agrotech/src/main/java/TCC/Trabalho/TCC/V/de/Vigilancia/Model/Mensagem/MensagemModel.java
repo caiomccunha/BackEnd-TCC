@@ -2,6 +2,7 @@ package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Mensagem;
 
 import java.time.LocalDateTime;
 
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +21,13 @@ public class MensagemModel {
     @Column (nullable = false, length = 2048)
     private String conteudo;
 
-    @Column (nullable = false)
-    private Long idRementente;
+    @ManyToOne
+    @JoinColumn(name = "id_remetente", nullable =  false)
+    private UsuarioModel remetente;
 
-    @Column (nullable = false)
-    private Long idDestinarario;
+    @ManyToOne
+    @Column (name = "id_destinatario", nullable = false)
+    private UsuarioModel destinatario;
 
     @Column (nullable = false)
     private LocalDateTime data_envio;
