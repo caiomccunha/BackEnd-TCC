@@ -1,23 +1,16 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Controller;
 
-import TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Demandas.CriacaoDemandaDTO;
-import TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Demandas.DemandaDTO;
 import TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Mensagem.MensagemDTO;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Mensagem.MensagemModel;
-import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.MensagemRepository;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Service.MensagemService;
 
-import TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Usuarios.UsuarioMensagemDTO;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.UsuarioRepository;
-
-import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.DemandasModel;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,9 +22,14 @@ public class MensagemController {
     private final UsuarioRepository usuarioRepository;
     private final MensagemService mensagemService;
 
+    public MensagemController(MensagemService mensagemService, UsuarioRepository usuarioRepository) {
+        this.mensagemService = mensagemService;
+        this.usuarioRepository = usuarioRepository;
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MensagemDTO> buscarPorID(@PathVariable Long id) {
-        return MensagemService.buscarMensagemId(id)
+        return mensagemService.buscarMensagemId(id)
                 .map(this::converterParaDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -39,7 +37,7 @@ public class MensagemController {
 
     @GetMapping("/usuario/{id}")
     public List<MensagemDTO> buscarMensagensPorRemetente(@PathVariable Long id) {
-    return MensagemService.buscarMensagensPorRemetente(id).stream()
+    return mensagemService.buscarMensagensPorRemetente(id).stream()
             .map(this::converterParaDTO)
             .collect(Collectors.toList());
     }
@@ -62,8 +60,8 @@ public class MensagemController {
         mensagem.setDestinatario(destinatario);
         mensagem.setData_envio(LocalDateTime.now());
 
-        DemandasModel demandaSalva = mensagemService.cadastrarDemandar(demanda);
-        return ResponseEntity.ok(converterParaDTO(demandaSalva));
+        MensagemModel mensagemSalva = mensagemService.cadastrarMensagem(mensagem);
+        return ResponseEntity.ok(converterParaDTO(mensagemSalva));
     }
 
     @PutMapping("/{id}")
@@ -111,9 +109,6 @@ public class MensagemController {
     private MensagemModel converterParaModel(MensagemDTO dto) {
         MensagemModel model = new MensagemModel();
         model.setConteudo(dto.getConteudo());
-        model.setRemetente(dto.getRemetente());
-        model.setDestinatario(dto.getDestinatario());
-        model.setData_envio(dto.getData_envio());
         return model;
     }
 }

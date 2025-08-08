@@ -1,5 +1,6 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ public class MensagemService {
 
     public Optional <MensagemModel> buscarMensagemId(Long id){
         return repository.findById(id);
+    }
+
+    public List<MensagemModel> buscarMensagensPorRemetente(Long remetenteId) {
+        return repository.findByUsuarioId(remetenteId);
     }
 
     public MensagemModel cadastrarMensagem(MensagemModel MensagemProdutor){
