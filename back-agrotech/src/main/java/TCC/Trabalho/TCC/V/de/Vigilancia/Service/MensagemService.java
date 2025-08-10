@@ -19,7 +19,7 @@ public class MensagemService {
     }
 
     public List<MensagemModel> buscarMensagensPorRemetente(Long remetenteId) {
-        return repository.findByUsuarioId(remetenteId);
+        return repository.findByRemetenteId(remetenteId);
     }
 
     public MensagemModel cadastrarMensagem(MensagemModel MensagemProdutor){

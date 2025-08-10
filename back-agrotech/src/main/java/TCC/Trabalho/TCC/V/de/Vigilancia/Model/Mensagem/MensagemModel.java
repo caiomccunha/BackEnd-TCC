@@ -26,7 +26,7 @@ public class MensagemModel {
     private UsuarioModel remetente;
 
     @ManyToOne
-    @Column (name = "id_destinatario", nullable = false)
+    @JoinColumn (name = "id_destinatario", nullable = false)
     private UsuarioModel destinatario;
 
     @Column (nullable = false)
