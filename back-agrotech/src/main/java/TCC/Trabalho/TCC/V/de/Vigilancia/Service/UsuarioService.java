@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Usuarios.UsuarioCadastroDTO;
@@ -134,5 +135,33 @@ public class UsuarioService {
             usuario.getBiografia(),
             usuario.getFoto_perfil()
         );
+    }
+
+    @Transactional
+    public void conectarUsuarios(Long id_usuario01, Long id_usuario02) {
+        UsuarioModel usuario01 = repository.findById(id_usuario01)
+                .orElseThrow(() -> new RuntimeException("Usuário 1 não encontrado."));
+        UsuarioModel usuario02 = repository.findById(id_usuario02)
+                .orElseThrow(() -> new RuntimeException("Usuário 2 não encontrado."));
+
+        usuario01.getConexoes().add(usuario02);
+        usuario02.getConexoes().add(usuario01);
+
+        repository.save(usuario01);
+        repository.save(usuario02);
+    }
+
+    @Transactional
+    public void desconectarUsuarios(Long id_usuario01, Long id_usuario02) {
+        UsuarioModel usuario01 = repository.findById(id_usuario01)
+                .orElseThrow(() -> new RuntimeException("Usuário 1 não encontrado."));
+        UsuarioModel usuario02 = repository.findById(id_usuario02)
+                .orElseThrow(() -> new RuntimeException("Usuário 2 não encontrado."));
+
+        usuario01.getConexoes().remove(usuario02);
+        usuario02.getConexoes().remove(usuario01);
+
+        repository.save(usuario01);
+        repository.save(usuario02);
     }
 }

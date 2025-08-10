@@ -1,5 +1,6 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Controller;
 
+import java.util.Set;
 import java.util.List;
 import java.util.Optional;
 
@@ -153,6 +154,13 @@ public class UsuarioController {
     public ResponseEntity<String> alertaSobreDadosUsuario(@RequestBody UsuarioModel usuario) {
         service.pegandoAlertandoSobreDados(usuario);
         return ResponseEntity.ok("Alerta processado, verifique o console para detalhes.");
+    }
+
+    @GetMapping("/{id}/conexoes")
+    public Set<UsuarioModel> getConexoes(@PathVariable Long id) {
+    UsuarioModel usuario = service.buscarUserPorID(id)
+                            .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+    return (usuario.getConexoes());
     }
 }
     

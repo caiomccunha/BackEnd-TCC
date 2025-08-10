@@ -1,11 +1,9 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario;
 
-import jakarta.persistence.Column;
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,4 +55,12 @@ public class UsuarioModel {
 
     @Column(nullable = false)
     private String senha;
+
+    @ManyToMany
+    @JoinTable(
+        name = "conexoes",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "conexao_id")
+    )
+    private Set<UsuarioModel> conexoes = new HashSet<>();
 }
