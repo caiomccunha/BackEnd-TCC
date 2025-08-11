@@ -1,0 +1,41 @@
+package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Postagens;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "post")
+@Getter
+@Setter
+@NoArgsConstructor
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "message", columnDefinition = "TEXT")
+    private String message;
+
+    @Column(name = "likes")
+    private int likes = 0;
+
+    @Column(name = "nome_arquivo_post")
+    private String nomeArquivoPost;
+
+    @Column(name = "tipo_mime_post")
+    private String tipoMimePost;
+
+    @Lob
+    @Column(name = "foto_post", columnDefinition = "LONGBLOB")
+    private byte[] fotoPost;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+}
