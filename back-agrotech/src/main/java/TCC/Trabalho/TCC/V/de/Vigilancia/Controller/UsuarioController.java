@@ -162,5 +162,19 @@ public class UsuarioController {
                             .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
     return (usuario.getConexoes());
     }
+
+    @GetMapping("/{id1}/conectado/{id2}")
+    public boolean verificarConexao(@PathVariable Long id1, @PathVariable Long id2) {
+        UsuarioModel usuario1 = service.buscarUserPorID(id1)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        UsuarioModel usuario2 = service.buscarUserPorID(id2)
+            .orElseThrow(() -> new RuntimeException("Usuário para conectar/desconectar não encontrado"));
+        return usuario1.getConexoes().contains(usuario2);
+    }
+
+    @PutMapping("/{id1}/conectar/{id2}")
+    public void conectar(@PathVariable Long id1, @PathVariable Long id2) {
+        service.conectarUsuarios(id1, id2);
+    }
 }
     

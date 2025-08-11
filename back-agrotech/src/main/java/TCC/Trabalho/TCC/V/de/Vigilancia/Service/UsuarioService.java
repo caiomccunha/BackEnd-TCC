@@ -144,22 +144,13 @@ public class UsuarioService {
         UsuarioModel usuario02 = repository.findById(id_usuario02)
                 .orElseThrow(() -> new RuntimeException("Usuário 2 não encontrado."));
 
-        usuario01.getConexoes().add(usuario02);
-        usuario02.getConexoes().add(usuario01);
-
-        repository.save(usuario01);
-        repository.save(usuario02);
-    }
-
-    @Transactional
-    public void desconectarUsuarios(Long id_usuario01, Long id_usuario02) {
-        UsuarioModel usuario01 = repository.findById(id_usuario01)
-                .orElseThrow(() -> new RuntimeException("Usuário 1 não encontrado."));
-        UsuarioModel usuario02 = repository.findById(id_usuario02)
-                .orElseThrow(() -> new RuntimeException("Usuário 2 não encontrado."));
-
-        usuario01.getConexoes().remove(usuario02);
-        usuario02.getConexoes().remove(usuario01);
+        if (usuario01.getConexoes().contains(usuario02)) {
+            usuario01.getConexoes().remove(usuario02);
+            usuario02.getConexoes().remove(usuario01);
+        } else {
+            usuario01.getConexoes().add(usuario02);
+            usuario02.getConexoes().add(usuario01);
+        }
 
         repository.save(usuario01);
         repository.save(usuario02);
