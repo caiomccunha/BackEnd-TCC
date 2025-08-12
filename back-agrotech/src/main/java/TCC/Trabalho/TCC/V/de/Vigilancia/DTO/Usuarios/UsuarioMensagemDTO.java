@@ -23,6 +23,5 @@ public class UsuarioMensagemDTO {
     private tipoApoiador tipo_apoiador;
     private byte[] foto_perfil;
     private Set<UsuarioModel> conexoes;
-    private Set<MensagemModel> mensagensEnviadas;
-    private Set<MensagemModel> mensagensRecebidas;
+    private Set<MensagemModel> mensagens;
 }
