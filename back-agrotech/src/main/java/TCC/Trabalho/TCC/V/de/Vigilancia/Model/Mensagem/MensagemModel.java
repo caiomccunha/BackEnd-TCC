@@ -22,6 +22,10 @@ public class MensagemModel {
     private String conteudo;
 
     @ManyToOne
+    @JoinColumn(name = "id_conversa", nullable = false)
+    private ConversaModel conversa;
+
+    @ManyToOne
     @JoinColumn(name = "id_remetente", nullable =  false)
     private UsuarioModel remetente;
 
