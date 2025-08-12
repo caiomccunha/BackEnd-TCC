@@ -144,12 +144,12 @@ public class UsuarioService {
         UsuarioModel usuario02 = repository.findById(id_usuario02)
                 .orElseThrow(() -> new RuntimeException("Usuário 2 não encontrado."));
 
-        if (usuario01.getConexoes().contains(id_usuario02)) {
-            usuario01.getConexoes().remove(id_usuario02);
-            usuario02.getConexoes().remove(id_usuario01);
+        if (usuario01.getConexoes().contains(usuario02)) {
+            usuario01.getConexoes().remove(usuario02);
+            usuario02.getConexoes().remove(usuario01);
         } else {
-            usuario01.getConexoes().add(id_usuario02);
-            usuario02.getConexoes().add(id_usuario01);
+            usuario01.getConexoes().add(usuario02);
+            usuario02.getConexoes().add(usuario01);
         }
 
         repository.save(usuario01);
