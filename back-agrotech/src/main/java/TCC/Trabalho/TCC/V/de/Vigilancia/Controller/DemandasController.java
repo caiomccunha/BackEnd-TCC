@@ -9,9 +9,11 @@ import TCC.Trabalho.TCC.V.de.Vigilancia.Service.DemandasService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -61,7 +63,7 @@ public class DemandasController {
 
         DemandasModel demanda = converterParaModel(demandaDTO);
         demanda.setUsuario(usuario);
-        demanda.setData_postagem(LocalDateTime.now());
+        demanda.setData_postagem(LocalDate.now());
 
         DemandasModel demandaSalva = demandasService.cadastrarDemandar(demanda);
         return ResponseEntity.ok(converterParaDTO(demandaSalva));
@@ -72,7 +74,8 @@ public class DemandasController {
             @PathVariable Long id,
             @RequestBody CriacaoDemandaDTO demandaDTO) {
 
-        if (!demandasService.buscarDemandaId(id).isPresent()) {
+        Optional<DemandasModel> demandaExistenteOpt = demandasService.buscarDemandaId(id);
+        if (!demandaExistenteOpt.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -82,6 +85,8 @@ public class DemandasController {
         DemandasModel demanda = converterParaModel(demandaDTO);
         demanda.setId(id);
         demanda.setUsuario(usuario);
+        // Mantém a data_postagem original, não atualiza!
+        demanda.setData_postagem(demandaExistenteOpt.get().getData_postagem());
 
         DemandasModel demandaAtualizada = demandasService.cadastrarDemandar(demanda);
         return ResponseEntity.ok(converterParaDTO(demandaAtualizada));

@@ -1,10 +1,9 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Demandas;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.Categoria_Demanda;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.TipoApoio;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Demanda.statusDemanda;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,8 @@ public class CriacaoDemandaDTO {
     private LocalDate data_postagem;
     private String cidade;
     private String estado;
-    private Date validade_oferta;
+    private LocalDate validade_oferta;
+    private TipoApoio tipo_apoio; // Representa o tipo de apoio como String
 
     // Novos campos
     private Long usuarioId; // ID do usuário que cria a demanda
