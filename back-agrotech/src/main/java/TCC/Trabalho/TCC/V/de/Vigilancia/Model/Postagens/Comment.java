@@ -23,4 +23,8 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel usuario;
+
 }

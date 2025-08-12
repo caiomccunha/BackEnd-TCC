@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "post")
@@ -37,5 +36,17 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel autor;
+
+    @ManyToMany
+    @JoinTable(
+        name = "post_likes",
+        joinColumns = @JoinColumn(name = "post_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private Set<TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel> likedBy = new HashSet<>();
 
 }
