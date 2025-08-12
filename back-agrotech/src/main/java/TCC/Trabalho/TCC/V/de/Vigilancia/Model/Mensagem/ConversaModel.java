@@ -1,6 +1,4 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Mensagem;
-    
-import java.time.LocalDateTime;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import jakarta.persistence.*;
