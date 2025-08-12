@@ -3,6 +3,8 @@ package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -62,5 +64,7 @@ public class UsuarioModel {
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "conexao_id")
     )
+
+    @JsonIgnore
     private Set<UsuarioModel> conexoes = new HashSet<>();
 }
