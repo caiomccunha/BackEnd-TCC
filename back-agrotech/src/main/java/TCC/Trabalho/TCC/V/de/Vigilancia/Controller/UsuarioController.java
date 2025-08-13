@@ -78,10 +78,12 @@ public class UsuarioController {
     @PostMapping("/login")
     @Operation(summary = "Login de usuário", description = "Autentica um usuário pelo email e senha")
     public ResponseEntity<?> login(@RequestBody UsuarioModel login) {
-        Optional<UsuarioModel> usuario = service.autenticar(login.getEmail(), login.getSenha());
+        Optional<UsuarioModel> usuario = service.autenticarUsuario(login.getEmail(), login.getSenha());
 
         if (usuario.isPresent()) {
-            return ResponseEntity.ok(usuario.get());
+            UsuarioModel user = usuario.get();
+            user.setSenha(null); // remove a senha da resposta para não exibir no frontend
+            return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.status(401).body("Email ou senha inválidos");
         }
