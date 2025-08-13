@@ -58,13 +58,11 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    @Transactional
     public void curtirPost(Long postId, Long usuarioId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post não encontrado."));
         UsuarioModel usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
-        post.getLikedBy().add(usuario);
 
 
         if (post.getLikedBy().contains(usuario)) post.getLikedBy().remove(usuario);

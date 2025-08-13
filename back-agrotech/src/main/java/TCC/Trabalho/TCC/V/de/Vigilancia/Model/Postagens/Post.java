@@ -1,6 +1,8 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Postagens;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +41,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "autor_id")
-    private TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel autor;
+    private UsuarioModel autor;
 
     @ManyToMany
     @JoinTable(
@@ -47,6 +49,6 @@ public class Post {
         joinColumns = @JoinColumn(name = "post_id"),
         inverseJoinColumns = @JoinColumn(name = "usuario_id")
     )
-    private Set<TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel> likedBy = new HashSet<>();
+    private Set<UsuarioModel> likedBy = new HashSet<>();
 
 }

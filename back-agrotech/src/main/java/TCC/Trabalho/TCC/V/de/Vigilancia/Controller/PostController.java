@@ -56,37 +56,31 @@ public class PostController {
     }
 
     @GetMapping
-        public ResponseEntity<?> getAllPosts(@RequestParam Long usuarioId) {
-            if (usuarioId == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("Parâmetro 'usuarioId' é obrigatório para esta operação.");
-            }
+        public ResponseEntity<?> getAllPosts() {
             List<Post> posts = postService.getAllPost();
-            List<PostResponse> response = posts.stream().map(post -> toResponse(post, usuarioId)).toList();
+            List<PostResponse> response = posts.stream().map(post -> toResponse(post)).toList();
             return ResponseEntity.ok(response);
     }
 
-    private PostResponse toResponse(Post post, Long usuarioId) {
-        boolean likedByCurrentUser = false;
-        if (usuarioId != null && post.getLikedBy() != null) {
-            likedByCurrentUser = post.getLikedBy().stream().anyMatch(u -> u.getId().equals(usuarioId));
-        }
+    private PostResponse toResponse(Post post) {
         UsuarioModel autor = post.getAutor();
-        return new PostResponse(post.getId(), post.getMessage(), post.getLikes(), likedByCurrentUser, autor.getId(), autor.getNome());
+        return new PostResponse(post.getId(), post.getMessage(), post.getLikes(), 
+        post.getFotoPost(), autor.getId(), autor.getNome());
     }
 
     public static class PostResponse {
         public long id;
         public String message;
         public int likes;
-        public boolean likedByCurrentUser;
+        public byte[] fotoPost;
         public Long autor;
         public String autorNome;
-        public PostResponse(long id, String message, int likes, boolean likedByCurrentUser, Long autor, String autorNome) {
+        public PostResponse(long id, String message, int likes, byte[] fotoPost,
+        Long autor, String autorNome) {
             this.id = id;
             this.message = message;
+            this.fotoPost = fotoPost;
             this.likes = likes;
-            this.likedByCurrentUser = likedByCurrentUser;
             this.autor = autor;
             this.autorNome = autorNome;
         }
@@ -107,16 +101,18 @@ public class PostController {
         postService.deletePost(id);
     }
 
-    @GetMapping("/{id1}/liked/{id2}")
-    public boolean verificarConexao(@PathVariable Long postId, @PathVariable Long usuarioId) {
+    @GetMapping("/{postId}/likedBy/{usuarioId}")
+    public boolean verificarCurtida(@PathVariable Long postId, @PathVariable Long usuarioId) {
         Post post = postService.getPostById(postId)
             .orElseThrow(() -> new RuntimeException("Post não encontrado"));
         UsuarioModel usuario = usuarioService.buscarUserPorID(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuário que curtiu não encontrado"));
+        System.out.println(post.getLikedBy());
+        System.out.println(usuario);
         return post.getLikedBy().contains(usuario);
     }
 
-    @PutMapping("/{id1}/like/{id2}")
+    @PutMapping("/{postId}/like/{usuarioId}")
     public void conectar(@PathVariable Long postId, @PathVariable Long usuarioId) {
         postService.curtirPost(postId, usuarioId);
     }

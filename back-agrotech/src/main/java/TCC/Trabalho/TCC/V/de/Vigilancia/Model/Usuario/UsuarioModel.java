@@ -55,7 +55,7 @@ public class UsuarioModel {
     @Column (name = "foto_perfil", columnDefinition = "LONGBLOB")
     private byte[] foto_perfil;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String senha;
 
     @ManyToMany

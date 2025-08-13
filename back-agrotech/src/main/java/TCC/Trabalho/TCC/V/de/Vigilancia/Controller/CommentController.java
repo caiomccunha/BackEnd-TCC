@@ -33,17 +33,13 @@ public class CommentController {
     public static class CommentResponse {
         public Long id;
         public String content;
-        public String nomeUsuario;
-        public byte[] fotoUsuario;
+        public Long usuario;
 
         public static CommentResponse fromComment(Comment comment) {
             CommentResponse resp = new CommentResponse();
             resp.id = comment.getId();
             resp.content = comment.getContent();
-            if (comment.getUsuario() != null) {
-                resp.nomeUsuario = comment.getUsuario().getNome();
-                resp.fotoUsuario = comment.getUsuario().getFoto_perfil();
-            }
+            resp.usuario = comment.getUsuario().getId();
             return resp;
         }
     }
