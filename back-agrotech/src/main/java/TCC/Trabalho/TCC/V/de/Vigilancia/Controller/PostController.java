@@ -2,6 +2,7 @@ package TCC.Trabalho.TCC.V.de.Vigilancia.Controller;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Postagens.Post;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Service.PostService;
+import TCC.Trabalho.TCC.V.de.Vigilancia.Service.UsuarioService;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
@@ -18,10 +19,12 @@ import java.util.List;
 @CrossOrigin (origins = "*")
 public class PostController {
     private final PostService postService;
+    private final UsuarioService usuarioService;
     private final ObjectMapper objectMapper;
 
-    public PostController(PostService postService, ObjectMapper objectMapper) {
+    public PostController(PostService postService, UsuarioService usuarioService, ObjectMapper objectMapper) {
         this.postService = postService;
+        this.usuarioService = usuarioService;
         this.objectMapper = objectMapper;
     }
 
@@ -69,9 +72,7 @@ public class PostController {
             likedByCurrentUser = post.getLikedBy().stream().anyMatch(u -> u.getId().equals(usuarioId));
         }
         UsuarioModel autor = post.getAutor();
-        String nomeAutor = autor != null ? autor.getNome() : "Usuário";
-        byte[] fotoAutor = autor != null ? autor.getFoto_perfil() : null;
-        return new PostResponse(post.getId(), post.getMessage(), post.getLikes(), likedByCurrentUser, nomeAutor, fotoAutor);
+        return new PostResponse(post.getId(), post.getMessage(), post.getLikes(), likedByCurrentUser, autor.getId(), autor.getNome());
     }
 
     public static class PostResponse {
@@ -79,15 +80,15 @@ public class PostController {
         public String message;
         public int likes;
         public boolean likedByCurrentUser;
+        public Long autor;
         public String autorNome;
-        public byte[] autorFoto;
-        public PostResponse(long id, String message, int likes, boolean likedByCurrentUser, String autorNome, byte[] autorFoto) {
+        public PostResponse(long id, String message, int likes, boolean likedByCurrentUser, Long autor, String autorNome) {
             this.id = id;
             this.message = message;
             this.likes = likes;
             this.likedByCurrentUser = likedByCurrentUser;
+            this.autor = autor;
             this.autorNome = autorNome;
-            this.autorFoto = autorFoto;
         }
     }
 
@@ -106,34 +107,17 @@ public class PostController {
         postService.deletePost(id);
     }
 
-    @PostMapping("/{id}/like")
-    public ResponseEntity<?> likePost(@PathVariable Long id, @RequestParam(required = false) Long usuarioId) {
-        if (usuarioId == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Parâmetro 'usuarioId' é obrigatório para curtir o post.");
-        }
-        try {
-            postService.likePost(id, usuarioId);
-            return ResponseEntity.ok("Post curtido com sucesso.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao curtir o post: " + e.getMessage());
-        }
+    @GetMapping("/{id1}/liked/{id2}")
+    public boolean verificarConexao(@PathVariable Long postId, @PathVariable Long usuarioId) {
+        Post post = postService.getPostById(postId)
+            .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+        UsuarioModel usuario = usuarioService.buscarUserPorID(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuário que curtiu não encontrado"));
+        return post.getLikedBy().contains(usuario);
     }
 
-    @PostMapping("/{id}/unlike")
-    public ResponseEntity<?> unlikePost(@PathVariable Long id, @RequestParam(required = false) Long usuarioId) {
-        if (usuarioId == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Parâmetro 'usuarioId' é obrigatório para remover curtida do post.");
-        }
-        try {
-            postService.unlikePost(id, usuarioId);
-            return ResponseEntity.ok("Curtida removida com sucesso.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao remover curtida: " + e.getMessage());
-        }
+    @PutMapping("/{id1}/like/{id2}")
+    public void conectar(@PathVariable Long postId, @PathVariable Long usuarioId) {
+        postService.curtirPost(postId, usuarioId);
     }
-
 }

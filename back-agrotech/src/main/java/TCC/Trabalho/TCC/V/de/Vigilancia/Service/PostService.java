@@ -5,6 +5,7 @@ import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.PostRepository;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -55,6 +56,23 @@ public class PostService {
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void curtirPost(Long postId, Long usuarioId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post não encontrado."));
+        UsuarioModel usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+        post.getLikedBy().add(usuario);
+
+
+        if (post.getLikedBy().contains(usuario)) post.getLikedBy().remove(usuario);
+        else post.getLikedBy().add(usuario);
+
+        post.setLikes(post.getLikedBy().size());
+
+        postRepository.save(post);
     }
 
     public void likePost(Long postId, Long usuarioId) {

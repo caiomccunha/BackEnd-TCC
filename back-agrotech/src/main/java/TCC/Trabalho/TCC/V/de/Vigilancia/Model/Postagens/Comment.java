@@ -1,6 +1,8 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Model.Postagens;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,6 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private TCC.Trabalho.TCC.V.de.Vigilancia.Model.Usuario.UsuarioModel usuario;
+    private UsuarioModel usuario;
 
 }
