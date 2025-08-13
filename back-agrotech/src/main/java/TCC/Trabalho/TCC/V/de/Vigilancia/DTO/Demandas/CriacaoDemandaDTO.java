@@ -21,7 +21,6 @@ public class CriacaoDemandaDTO {
     private LocalDate data_postagem;
     private String cidade;
     private String estado;
-    private LocalDate validade_oferta;
     private TipoApoio tipo_apoio; // Representa o tipo de apoio como String
 
     // Novos campos

@@ -113,7 +113,6 @@ public class DemandasController {
         dto.setStatus(model.getStatus());
         dto.setCidade(model.getCidade());
         dto.setEstado(model.getEstado());
-        dto.setValidade_oferta(model.getValidade_oferta());
 
         if (model.getUsuario() != null) {
             dto.setUsuarioNome(model.getUsuario().getNome());
@@ -134,7 +133,6 @@ public class DemandasController {
         model.setCategoria(dto.getCategoria());
         model.setCidade(dto.getCidade());
         model.setEstado(dto.getEstado());
-        model.setValidade_oferta(dto.getValidade_oferta());
         model.setStatus(dto.getStatus());
         return model;
     }

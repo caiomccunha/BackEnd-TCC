@@ -49,9 +49,6 @@ public class DemandasModel {
     @Column (nullable = false)
     private String estado;
 
-    @Column 
-    private LocalDate validade_oferta;
-
     @Enumerated(EnumType.STRING)
     @Column
     private TipoApoio tipo_apoio;
