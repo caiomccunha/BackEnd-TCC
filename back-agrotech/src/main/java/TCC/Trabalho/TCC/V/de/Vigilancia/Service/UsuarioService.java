@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Usuarios.UsuarioCadastroDTO;
@@ -18,9 +19,10 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repository;
 
-    public UsuarioDTO salvarUsuario(UsuarioCadastroDTO dto) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-        // Verifica se o email já está cadastrado
+    public UsuarioDTO salvarUsuario(UsuarioCadastroDTO dto) {
         Optional<UsuarioModel> usuarioExistente = repository.findByEmail(dto.getEmail());
         if (usuarioExistente.isPresent()) {
             throw new RuntimeException("Email já cadastrado");
@@ -37,8 +39,8 @@ public class UsuarioService {
         model.setTipo_usuario(dto.getTipo_usuario());
         model.setTipo_apoiador(dto.getTipo_apoiador());
         model.setBiografia(dto.getBiografia());
-        model.setSenha(dto.getSenha());
-        model.setFoto_perfil(dto.getFoto_perfil()); // pode ser null
+        model.setSenha(passwordEncoder.encode(dto.getSenha()));  // codifica a senha
+        model.setFoto_perfil(dto.getFoto_perfil());
 
         return toDTO(repository.save(model));
     }
@@ -55,10 +57,28 @@ public class UsuarioService {
         return repository.findByEmail(email);
     }
 
-    public Optional<UsuarioModel> autenticar(String email, String senha) {
-        Optional<UsuarioModel> usuario = repository.findByEmail(email);
-        if (usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
-            return usuario;
+    public Optional<UsuarioModel> autenticarUsuario(String email, String senha) {
+        Optional<UsuarioModel> usuarioExistente = repository.findByEmail(email);
+        if (usuarioExistente.isPresent()) {
+            UsuarioModel usuario = usuarioExistente.get();
+            String senhaSalva = usuario.getSenha();
+
+            if (senhaSalva != null) {
+                if (senhaSalva.startsWith("$2a$") || senhaSalva.startsWith("$2b$") || senhaSalva.startsWith("$2y$")) {
+                    // Senha já codificada com BCrypt
+                    if (passwordEncoder.matches(senha, senhaSalva)) {
+                        return Optional.of(usuario);
+                    }
+                } else {
+                    // Senha em texto puro (não seguro, só para transição)
+                    if (senha.equals(senhaSalva)) {
+                        // Codifica e salva a senha para futuros logins
+                        usuario.setSenha(passwordEncoder.encode(senha));
+                        repository.save(usuario);
+                        return Optional.of(usuario);
+                    }
+                }
+            }
         }
         return Optional.empty();
     }
@@ -68,7 +88,6 @@ public class UsuarioService {
         if (usuarioExistente.isPresent()) {
             UsuarioModel usuario = usuarioExistente.get();
 
-            // Atualiza apenas se o campo não for nulo ou vazio
             if (dto.getNome() != null && !dto.getNome().isEmpty()) usuario.setNome(dto.getNome());
             if (dto.getEmail() != null && !dto.getEmail().isEmpty()) usuario.setEmail(dto.getEmail());
             if (dto.getDocumento() != null && !dto.getDocumento().isEmpty()) usuario.setDocumento(dto.getDocumento());
@@ -94,8 +113,8 @@ public class UsuarioService {
             }
 
             if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
-                usuario.setSenha(dto.getSenha());
-            } // se a senha for null, mantém a atual
+                usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
+            }
 
             UsuarioModel usuarioAtualizado = repository.save(usuario);
             return Optional.of(toDTO(usuarioAtualizado));
