@@ -1,5 +1,6 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Controller;
 
+import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Postagens.Comment;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Postagens.Post;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Service.PostService;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Service.UsuarioService;
@@ -65,7 +66,7 @@ public class PostController {
     private PostResponse toResponse(Post post) {
         UsuarioModel autor = post.getAutor();
         return new PostResponse(post.getId(), post.getMessage(), post.getLikes(), 
-        post.getFotoPost(), autor.getId(), autor.getNome());
+        post.getFotoPost(), autor.getId(), autor.getNome(), post.getComments());
     }
 
     public static class PostResponse {
@@ -75,14 +76,16 @@ public class PostController {
         public byte[] fotoPost;
         public Long autor;
         public String autorNome;
+        public List<Comment> comments;
         public PostResponse(long id, String message, int likes, byte[] fotoPost,
-        Long autor, String autorNome) {
+        Long autor, String autorNome, List<Comment> comments) {
             this.id = id;
             this.message = message;
             this.fotoPost = fotoPost;
             this.likes = likes;
             this.autor = autor;
             this.autorNome = autorNome;
+            this.comments = comments;
         }
     }
 
