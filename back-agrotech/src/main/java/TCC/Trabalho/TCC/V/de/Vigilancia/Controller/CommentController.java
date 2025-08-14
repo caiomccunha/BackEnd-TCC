@@ -1,5 +1,6 @@
 package TCC.Trabalho.TCC.V.de.Vigilancia.Controller;
 
+import TCC.Trabalho.TCC.V.de.Vigilancia.DTO.Postagens.CommentDTO;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Model.Postagens.Comment;
 import TCC.Trabalho.TCC.V.de.Vigilancia.Service.CommentService;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,11 @@ public class CommentController {
     }
 
     @PostMapping("/post/{postId}")
-    public Comment addComment(@PathVariable Long postId, @RequestBody Comment comment) {
-        return commentService.addComment(postId, comment);
+    public ResponseEntity<CommentResponse> addComment(@PathVariable Long postId, @RequestBody CommentDTO request) {
+        Comment comment = new Comment();
+        comment.setContent(request.getContent());
+        Comment saved = commentService.addComment(postId, comment, request.getUsuarioId());
+        return ResponseEntity.ok(CommentResponse.fromComment(saved));
     }
 
     @GetMapping("/post/{postId}")
